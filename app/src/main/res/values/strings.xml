@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Player</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="intro_label">Introduction</string>
+
+    <string name="welcome_to_play_beats">"Welcome to Play Beats, a beautiful and lightweight music player for Android. "</string>
+    <string name="label_playing_queue">Playing queue</string>
+    <string name="open_playing_queue_instruction">Swipe the card in the now playing screen up to reveal the full playing queue.</string>
+    <string name="rearrange_playing_queue_instruction">Rearrange the playing queue by dragging a song from its track number.</string>
+
+    <string name="library">Library</string>
+    <string name="file">Files</string>
+    <string name="my_favorite">My Favorite</string>
+    <string name="action_about">About</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="songs_tab">Songs</string>
+    <string name="artist_tab">Artists</string>
+    <string name="albums_tab">Albums</string>
+    <string name="genres_tab">Genres</string>
+    <string name="playlists_tab">Playlists</string>
+
+    <string name="action_shuffle_all">Shuffle all</string>
+    <string name="action_shuffle_album">Shuffle album</string>
+    <string name="action_shuffle_artist">Shuffle artist</string>
+    <string name="action_shuffle_playlist">Shuffle playlist</string>
+    <string name="action_clear_playing_queue">Clear playing queue</string>
+    <string name="action_go_to_start_directory">Go to start directory</string>
+    <string name="action_show_lyrics">Show lyrics</string>
+    <string name="action_search">Search</string>
+    <string name="action_grid_size">Grid size</string>
+
+    <string name="grid_size_1">1</string>
+    <string name="grid_size_2">2</string>
+    <string name="grid_size_3">3</string>
+    <string name="grid_size_4">4</string>
+    <string name="grid_size_5">5</string>
+    <string name="grid_size_6">6</string>
+    <string name="grid_size_7">7</string>
+    <string name="grid_size_8">8</string>
+    <string name="colored_footers">Colored footers</string>
+    <string name="equalizer">Equalizer</string>
+
+</resources>
