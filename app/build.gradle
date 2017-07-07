@@ -32,6 +32,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.heinrichreimersoftware:material-intro:1.6.2'
     compile 'gun0912.ted:tedpermission:1.0.3'
+    compile 'nl.psdcompany:duo-navigation-drawer:2.0.6'
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }

@@ -87,6 +87,7 @@ public class MyDrawerActivity extends AppCompatActivity {
 
     private void askPermission() {
         Functions.setPermission(this, new String[]{
+
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_PHONE_STATE
                 }

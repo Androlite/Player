@@ -46,5 +46,13 @@
     <string name="grid_size_8">8</string>
     <string name="colored_footers">Colored footers</string>
     <string name="equalizer">Equalizer</string>
+    <string name="search_hint">Search your library…</string>
 
+    <array name="menuOptions">
+        <item>Home</item>
+        <item>Personal</item>
+        <item>High scores</item>
+        <item>Settings</item>
+        <item>About</item>
+    </array>
 </resources>

@@ -65,8 +65,6 @@ public class LibraryFragment extends Fragment {
         return view;
     }
 
-
-
     private void highLightCurrentTab(int position) {
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -89,7 +87,6 @@ public class LibraryFragment extends Fragment {
 
         viewPager.setAdapter(tabMenuAdapter);
     }
-
 
     private void actionListener() {
 
