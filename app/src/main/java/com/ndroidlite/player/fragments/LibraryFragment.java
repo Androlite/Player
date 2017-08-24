@@ -1,17 +1,20 @@
 package com.ndroidlite.player.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.custom.TabMenuAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.fragments.library.AlbumsFragment;
 import com.ndroidlite.player.fragments.library.ArtistFragment;
 import com.ndroidlite.player.fragments.library.GenresFragment;
@@ -22,11 +25,11 @@ import com.ndroidlite.player.fragments.library.SongsFragment;
  * A simple {@link Fragment} subclass.
  */
 public class LibraryFragment extends Fragment {
-
-
+    private Toolbar toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private TabMenuAdapter tabMenuAdapter;
+    private TfTextView txtTitle;
 
     public LibraryFragment() {
         // Required empty public constructor
@@ -43,7 +46,7 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("My Library");
+        getActivity().setTitle(getResources().getString(R.string.library));
     }
 
     @Override
@@ -52,6 +55,17 @@ public class LibraryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_library, container, false);
 
+        init(view);
+
+        actionListener();
+
+        return view;
+    }
+
+
+
+
+    private void init(View view) {
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         setupViewPager(viewPager);
 
@@ -59,10 +73,10 @@ public class LibraryFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         highLightCurrentTab(0);
+    }
 
-        actionListener();
+    private void clickListener() {
 
-        return view;
     }
 
     private void highLightCurrentTab(int position) {

@@ -307,6 +307,10 @@
     <color name="md_yellow_A200">#FFFF00</color>
     <color name="md_yellow_A400">#FFEA00</color>
     <color name="md_yellow_A700">#FFD600</color>
+    <color name="md_divider_white">#10FFFFFF</color>
+    <color name="md_divider_black">#10000000</color>
+
+    <color name="twenty_percent_black_overlay">#34000000</color>
 
     <color name="green">#ff669900</color>
     <color name="white">#ffffff</color>

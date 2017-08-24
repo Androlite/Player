@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.StyleRes;
 
 
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.fragments.FilesFragment;
+import com.ndroidlite.player.fragments.player.NowPlayingScreen;
 import com.ndroidlite.player.helper.SortOrder;
 
 import java.io.File;
@@ -68,6 +70,8 @@ public final class PreferenceUtil {
 
     public static final String START_DIRECTORY = "start_directory";
 
+    public static final String SYNCHRONIZED_LYRICS_SHOW = "synchronized_lyrics_show";
+
     private static PreferenceUtil sInstance;
 
     private final SharedPreferences mPreferences;
@@ -91,7 +95,7 @@ public final class PreferenceUtil {
         mPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
-   /* public int getGeneralTheme() {
+    public int getGeneralTheme() {
         return getThemeResFromPrefValue(mPreferences.getString(GENERAL_THEME, ""));
     }
 
@@ -99,15 +103,14 @@ public final class PreferenceUtil {
     public static int getThemeResFromPrefValue(String themePrefValue) {
         switch (themePrefValue) {
             case "dark":
-                return R.style.Theme_Phonograph;
+                return R.style.Theme_Player;
             case "black":
-                return R.style.Theme_Phonograph_Black;
+                return R.style.Theme_Player_Black;
             case "light":
             default:
-                return R.style.Theme_Phonograph_Light;
+                return R.style.Theme_Player_Light;
         }
     }
-*/
     public final int getDefaultStartPage() {
         return Integer.parseInt(mPreferences.getString(DEFAULT_START_PAGE, "-1"));
     }
@@ -132,7 +135,7 @@ public final class PreferenceUtil {
         return mPreferences.getInt(LAST_MUSIC_CHOOSER, 0);
     }
 
-   /* public final NowPlayingScreen getNowPlayingScreen() {
+    public final NowPlayingScreen getNowPlayingScreen() {
         int id = mPreferences.getInt(NOW_PLAYING_SCREEN_ID, 0);
         for (NowPlayingScreen nowPlayingScreen : NowPlayingScreen.values()) {
             if (nowPlayingScreen.id == id) return nowPlayingScreen;
@@ -144,9 +147,8 @@ public final class PreferenceUtil {
     public void setNowPlayingScreen(NowPlayingScreen nowPlayingScreen) {
         final SharedPreferences.Editor editor = mPreferences.edit();
         editor.putInt(NOW_PLAYING_SCREEN_ID, nowPlayingScreen.id);
-        editor.commit();
+        editor.apply();
     }
-*/
     public final boolean coloredNotification() {
         return mPreferences.getBoolean(COLORED_NOTIFICATION, true);
     }
@@ -398,5 +400,9 @@ public final class PreferenceUtil {
         final SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(START_DIRECTORY, file.getPath());
         editor.apply();
+    }
+
+    public final boolean synchronizedLyricsShow() {
+        return mPreferences.getBoolean(SYNCHRONIZED_LYRICS_SHOW, true);
     }
 }

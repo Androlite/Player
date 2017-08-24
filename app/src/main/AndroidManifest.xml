@@ -20,11 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".intro.AppIntroActivity"
-            android:label="@string/intro_label"
-            android:theme="@style/Theme.Intro" />
-        <activity
-            android:name=".activity.MyDrawerActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".intro.AppIntroActivity"
+            android:label="@string/intro_label"
+            android:theme="@style/Theme.Intro" />
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.ArtistDetailActivity" />
+        <activity android:name=".activity.AlbumDetailActivity" />
+        <activity android:name=".activity.PlaylistDetailActivity"></activity>
     </application>
 
 </manifest>
