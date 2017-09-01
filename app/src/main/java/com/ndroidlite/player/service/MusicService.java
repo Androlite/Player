@@ -1,5 +1,6 @@
 package com.ndroidlite.player.service;
 
+
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -39,23 +40,23 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.ndroidlite.player.R;
-import com.ndroidlite.player.appWidgets.AppWidgetBig;
-import com.ndroidlite.player.appWidgets.AppWidgetCard;
-import com.ndroidlite.player.appWidgets.AppWidgetClassic;
-import com.ndroidlite.player.appWidgets.AppWidgetSmall;
+import com.ndroidlite.player.appwidgets.AppWidgetBig;
+import com.ndroidlite.player.appwidgets.AppWidgetCard;
+import com.ndroidlite.player.appwidgets.AppWidgetClassic;
+import com.ndroidlite.player.appwidgets.AppWidgetSmall;
 import com.ndroidlite.player.helper.ShuffleHelper;
 import com.ndroidlite.player.helper.StopWatch;
 import com.ndroidlite.player.imageHandler.BlurTransformation;
 import com.ndroidlite.player.imageHandler.SongGlideRequest;
 import com.ndroidlite.player.interfaces.Playback;
 import com.ndroidlite.player.loader.PlaylistSongLoader;
-import com.ndroidlite.player.model.AbsCustomPlaylist;
+import com.ndroidlite.player.model.AdlCustomPlaylist;
 import com.ndroidlite.player.model.Playlist;
 import com.ndroidlite.player.model.Song;
 import com.ndroidlite.player.provider.HistoryStore;
 import com.ndroidlite.player.provider.MusicPlaybackQueueStore;
 import com.ndroidlite.player.provider.SongPlayCountStore;
-import com.ndroidlite.player.service.notification.PlayNotification;
+import com.ndroidlite.player.service.notification.PlayingNotification;
 import com.ndroidlite.player.service.notification.PlayingNotificationImpl;
 import com.ndroidlite.player.service.notification.PlayingNotificationImpl24;
 import com.ndroidlite.player.utils.MusicUtil;
@@ -71,34 +72,34 @@ import java.util.Random;
  * Created by chiragpatel on 24-07-2017.
  */
 
-public class MusicService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener, Playback.PlaybackCallbacks {
+public class MusicService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener, Playback.PlaybackCallbacks{
     public static final String TAG = MusicService.class.getSimpleName();
 
-    public static final String PHONOGRAPH_PACKAGE_NAME = "com.kabouzeid.gramophone" + ".temp_sticky_intent_fix"; // TODO remove ".temp_sticky_intent_fix" in a future update.
+    public static final String PLAYER_PACKAGE_NAME = "com.ndroidlite.player" + ".temp_sticky_intent_fix"; // TODO remove ".temp_sticky_intent_fix" in a future update.
     public static final String MUSIC_PACKAGE_NAME = "com.android.music";
 
-    public static final String ACTION_TOGGLE_PAUSE = PHONOGRAPH_PACKAGE_NAME + ".togglepause";
-    public static final String ACTION_PLAY = PHONOGRAPH_PACKAGE_NAME + ".play";
-    public static final String ACTION_PLAY_PLAYLIST = PHONOGRAPH_PACKAGE_NAME + ".play.playlist";
-    public static final String ACTION_PAUSE = PHONOGRAPH_PACKAGE_NAME + ".pause";
-    public static final String ACTION_STOP = PHONOGRAPH_PACKAGE_NAME + ".stop";
-    public static final String ACTION_SKIP = PHONOGRAPH_PACKAGE_NAME + ".skip";
-    public static final String ACTION_REWIND = PHONOGRAPH_PACKAGE_NAME + ".rewind";
-    public static final String ACTION_QUIT = PHONOGRAPH_PACKAGE_NAME + ".quitservice";
-    public static final String INTENT_EXTRA_PLAYLIST = PHONOGRAPH_PACKAGE_NAME + "intentextra.playlist";
-    public static final String INTENT_EXTRA_SHUFFLE_MODE = PHONOGRAPH_PACKAGE_NAME + ".intentextra.shufflemode";
+    public static final String ACTION_TOGGLE_PAUSE = PLAYER_PACKAGE_NAME + ".togglepause";
+    public static final String ACTION_PLAY = PLAYER_PACKAGE_NAME + ".play";
+    public static final String ACTION_PLAY_PLAYLIST = PLAYER_PACKAGE_NAME + ".play.playlist";
+    public static final String ACTION_PAUSE = PLAYER_PACKAGE_NAME + ".pause";
+    public static final String ACTION_STOP = PLAYER_PACKAGE_NAME + ".stop";
+    public static final String ACTION_SKIP = PLAYER_PACKAGE_NAME + ".skip";
+    public static final String ACTION_REWIND = PLAYER_PACKAGE_NAME + ".rewind";
+    public static final String ACTION_QUIT = PLAYER_PACKAGE_NAME + ".quitservice";
+    public static final String INTENT_EXTRA_PLAYLIST = PLAYER_PACKAGE_NAME + "intentextra.playlist";
+    public static final String INTENT_EXTRA_SHUFFLE_MODE = PLAYER_PACKAGE_NAME + ".intentextra.shufflemode";
 
-    public static final String APP_WIDGET_UPDATE = PHONOGRAPH_PACKAGE_NAME + ".appwidgetupdate";
-    public static final String EXTRA_APP_WIDGET_NAME = PHONOGRAPH_PACKAGE_NAME + "app_widget_name";
+    public static final String APP_WIDGET_UPDATE = PLAYER_PACKAGE_NAME + ".appwidgetupdate";
+    public static final String EXTRA_APP_WIDGET_NAME = PLAYER_PACKAGE_NAME + "app_widget_name";
 
     // do not change these three strings as it will break support with other apps (e.g. last.fm scrobbling)
-    public static final String META_CHANGED = PHONOGRAPH_PACKAGE_NAME + ".metachanged";
-    public static final String QUEUE_CHANGED = PHONOGRAPH_PACKAGE_NAME + ".queuechanged";
-    public static final String PLAY_STATE_CHANGED = PHONOGRAPH_PACKAGE_NAME + ".playstatechanged";
+    public static final String META_CHANGED = PLAYER_PACKAGE_NAME + ".metachanged";
+    public static final String QUEUE_CHANGED = PLAYER_PACKAGE_NAME + ".queuechanged";
+    public static final String PLAY_STATE_CHANGED = PLAYER_PACKAGE_NAME + ".playstatechanged";
 
-    public static final String REPEAT_MODE_CHANGED = PHONOGRAPH_PACKAGE_NAME + ".repeatmodechanged";
-    public static final String SHUFFLE_MODE_CHANGED = PHONOGRAPH_PACKAGE_NAME + ".shufflemodechanged";
-    public static final String MEDIA_STORE_CHANGED = PHONOGRAPH_PACKAGE_NAME + ".mediastorechanged";
+    public static final String REPEAT_MODE_CHANGED = PLAYER_PACKAGE_NAME + ".repeatmodechanged";
+    public static final String SHUFFLE_MODE_CHANGED = PLAYER_PACKAGE_NAME + ".shufflemodechanged";
+    public static final String MEDIA_STORE_CHANGED = PLAYER_PACKAGE_NAME + ".mediastorechanged";
 
     public static final String SAVED_POSITION = "POSITION";
     public static final String SAVED_POSITION_IN_TRACK = "POSITION_IN_TRACK";
@@ -141,7 +142,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
     private int repeatMode;
     private boolean queuesRestored;
     private boolean pausedByTransientLossOfFocus;
-    private PlayNotification playingNotification;
+    private PlayingNotification playingNotification;
     private AudioManager audioManager;
     @SuppressWarnings("deprecation")
     private MediaSessionCompat mediaSession;
@@ -219,7 +220,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
         mediaSession.setActive(true);
 
-        sendBroadcast(new Intent("com.kabouzeid.gramophone.PHONOGRAPH_MUSIC_SERVICE_CREATED"));
+        sendBroadcast(new Intent("com.ndroidlite.player.PLAYER_MUSIC_SERVICE_CREATED"));
     }
 
     private AudioManager getAudioManager() {
@@ -306,8 +307,8 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
                         int shuffleMode = intent.getIntExtra(INTENT_EXTRA_SHUFFLE_MODE, getShuffleMode());
                         if (playlist != null) {
                             ArrayList<Song> playlistSongs;
-                            if (playlist instanceof AbsCustomPlaylist) {
-                                playlistSongs = ((AbsCustomPlaylist) playlist).getSongs(getApplicationContext());
+                            if (playlist instanceof AdlCustomPlaylist) {
+                                playlistSongs = ((AdlCustomPlaylist) playlist).getSongs(getApplicationContext());
                             } else {
                                 //noinspection unchecked
                                 playlistSongs = (ArrayList<Song>) (List) PlaylistSongLoader.getPlaylistSongList(getApplicationContext(), playlist.id);
@@ -360,7 +361,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
         PreferenceUtil.getInstance(this).unregisterOnSharedPreferenceChangedListener(this);
         wakeLock.release();
 
-        sendBroadcast(new Intent("com.kabouzeid.gramophone.PHONOGRAPH_MUSIC_SERVICE_DESTROYED"));
+        sendBroadcast(new Intent("com.ndroidlite.player.PLAYER_MUSIC_SERVICE_DESTROYED"));
     }
 
     @Override
@@ -1033,7 +1034,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
     // to let other apps know whats playing. i.E. last.fm (scrobbling) or musixmatch
     private void sendPublicIntent(@NonNull final String what) {
-        final Intent intent = new Intent(what.replace(PHONOGRAPH_PACKAGE_NAME, MUSIC_PACKAGE_NAME));
+        final Intent intent = new Intent(what.replace(PLAYER_PACKAGE_NAME, MUSIC_PACKAGE_NAME));
 
         final Song song = getCurrentSong();
 
@@ -1048,7 +1049,7 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
 
         intent.putExtra("playing", isPlaying());
 
-        intent.putExtra("scrobbling_source", PHONOGRAPH_PACKAGE_NAME);
+        intent.putExtra("scrobbling_source", PLAYER_PACKAGE_NAME);
 
         sendStickyBroadcast(intent);
     }
@@ -1385,4 +1386,5 @@ public class MusicService extends Service implements SharedPreferences.OnSharedP
             }
         }
     }
+
 }

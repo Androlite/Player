@@ -33,6 +33,18 @@
                 <item
                     android:id="@+id/action_grid_size_4"
                     android:title="@string/grid_size_4" />
+                <item
+                    android:id="@+id/action_grid_size_5"
+                    android:title="@string/grid_size_5" />
+                <item
+                    android:id="@+id/action_grid_size_6"
+                    android:title="@string/grid_size_6" />
+                <item
+                    android:id="@+id/action_grid_size_7"
+                    android:title="@string/grid_size_7" />
+                <item
+                    android:id="@+id/action_grid_size_8"
+                    android:title="@string/grid_size_8" />
             </group>
         </menu>
     </item>

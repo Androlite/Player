@@ -1,5 +1,6 @@
 package com.ndroidlite.player.service.notification;
 
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -28,7 +29,7 @@ import com.ndroidlite.player.imageHandler.SongGlideRequest;
 import com.ndroidlite.player.imageHandler.palette.BitmapPaletteWrapper;
 import com.ndroidlite.player.model.Song;
 import com.ndroidlite.player.service.MusicService;
-import com.ndroidlite.player.utils.PhonographColorUtil;
+import com.ndroidlite.player.utils.PlayerColorUtil;
 import com.ndroidlite.player.utils.PreferenceUtil;
 import com.ndroidlite.player.utils.Util;
 
@@ -36,7 +37,7 @@ import com.ndroidlite.player.utils.Util;
  * Created by chiragpatel on 25-07-2017.
  */
 
-public class PlayingNotificationImpl implements PlayNotification {
+public class PlayingNotificationImpl implements PlayingNotification{
     private MusicService service;
 
     private Target<BitmapPaletteWrapper> target;
@@ -105,7 +106,7 @@ public class PlayingNotificationImpl implements PlayNotification {
                         .into(new SimpleTarget<BitmapPaletteWrapper>(bigNotificationImageSize, bigNotificationImageSize) {
                             @Override
                             public void onResourceReady(BitmapPaletteWrapper resource, GlideAnimation<? super BitmapPaletteWrapper> glideAnimation) {
-                                update(resource.getBitmap(), PhonographColorUtil.getColor(resource.getPalette(), Color.TRANSPARENT));
+                                update(resource.getBitmap(), PlayerColorUtil.getColor(resource.getPalette(), Color.TRANSPARENT));
                             }
 
                             @Override

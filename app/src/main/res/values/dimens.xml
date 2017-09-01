@@ -9,6 +9,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="profile_width">75dp</dimen>
     <dimen name="profile_height">75dp</dimen>
+    <dimen name="seek_bar_margin_left_right">-17dp</dimen>
+    <dimen name="list_padding_vertical">2dp</dimen>
 
     <dimen name="sp8">8sp</dimen>
     <dimen name="sp10">10sp</dimen>
@@ -126,6 +128,11 @@
     <dimen name="dimen_120dp">120dp</dimen>
     <dimen name="dimen_68dp">68dp</dimen>
     <dimen name="dimen_104dp">104dp</dimen>
+    <dimen name="dimen_110dp">110dp</dimen>
+    <dimen name="dimen_250dp">250dp</dimen>
+    <dimen name="dimen_600dp">600dp</dimen>
+    <dimen name="header_image_height">360dp</dimen>
+    <dimen name="title_view_height">72dp</dimen>
 
 
 </resources>

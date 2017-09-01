@@ -1,5 +1,6 @@
 package com.ndroidlite.player.service.notification;
 
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -34,7 +35,7 @@ import static com.ndroidlite.player.service.MusicService.ACTION_TOGGLE_PAUSE;
  * Created by chiragpatel on 25-07-2017.
  */
 
-public class PlayingNotificationImpl24 implements PlayNotification {
+public class PlayingNotificationImpl24 implements PlayingNotification {
     private static final int NOTIFY_MODE_FOREGROUND = 1;
     private static final int NOTIFY_MODE_BACKGROUND = 0;
 

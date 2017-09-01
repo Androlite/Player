@@ -100,7 +100,7 @@ public class FlatPlayerFragment extends AdlPlayerFragment implements PlayerAlbum
         playerStatusBar = (View) view.findViewById(R.id.player_status_bar);
         toolbar = (Toolbar) view.findViewById(R.id.player_toolbar);
         slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.player_sliding_layout);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.player_recycler_view);
         playerQueueSubHeader = (TextView) view.findViewById(R.id.player_queue_sub_header);
         return view;
     }

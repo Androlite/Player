@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import com.kabouzeid.appthemehelper.util.ATHUtil;
 import com.ndroidlite.player.R;
 
-
 /**
  * Created by chiragpatel on 25-07-2017.
  */
@@ -34,5 +33,4 @@ public class IconImageView extends AppCompatImageView {
         if (context == null) return;
         setColorFilter(ATHUtil.resolveColor(context, R.attr.iconColor), PorterDuff.Mode.SRC_IN);
     }
-
 }

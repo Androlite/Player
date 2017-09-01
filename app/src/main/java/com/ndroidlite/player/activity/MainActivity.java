@@ -2,64 +2,101 @@ package com.ndroidlite.player.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.gun0912.tedpermission.PermissionListener;
+import com.bumptech.glide.Glide;
+import com.kabouzeid.appthemehelper.ThemeStore;
+import com.kabouzeid.appthemehelper.util.ATHUtil;
+import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.activity.base.AdlSlidingMusicPanelActivity;
+import com.ndroidlite.player.dialogs.ChangelogDialog;
 import com.ndroidlite.player.fragments.FavouriteFragment;
 import com.ndroidlite.player.fragments.FilesFragment;
 import com.ndroidlite.player.fragments.LibraryFragment;
-import com.ndroidlite.player.helper.Functions;
+import com.ndroidlite.player.helper.MusicPlayerRemote;
+import com.ndroidlite.player.helper.SearchQueryHelper;
+import com.ndroidlite.player.imageHandler.SongGlideRequest;
 import com.ndroidlite.player.intro.AppIntroActivity;
+import com.ndroidlite.player.loader.AlbumLoader;
+import com.ndroidlite.player.loader.ArtistSongLoader;
+import com.ndroidlite.player.loader.PlaylistSongLoader;
+import com.ndroidlite.player.model.Song;
+import com.ndroidlite.player.service.MusicService;
 import com.ndroidlite.player.utils.PreferenceUtil;
+import com.ndroidlite.player.utils.Util;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AdlSlidingMusicPanelActivity {
+
+    public static final String TAG = MainActivity.class.getSimpleName();
     public static final int APP_INTRO_REQUEST = 100;
     private static final int LIBRARY = 0;
     private static final int FILES = 1;
     private static final int FAV = 2;
-    private MainActivity.MainActivityFragmentCallbacks currentFragment;
-    private NavigationView navigationView;
-    private DrawerLayout mDrawerLayout;
+
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+
+    @Nullable
+    MainActivityFragmentCallbacks currentFragment;
+
+    @Nullable
+    private View navigationDrawerHeader;
+
+    private boolean blockRequestPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            Util.setStatusBarTranslucent(getWindow());
+            drawerLayout.setFitsSystemWindows(false);
+            navigationView.setFitsSystemWindows(false);
+            //noinspection ConstantConditions
+            findViewById(R.id.drawer_content_container).setFitsSystemWindows(false);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            drawerLayout.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
+                    navigationView.dispatchApplyWindowInsets(windowInsets);
+                    return windowInsets.replaceSystemWindowInsets(0, 0, 0, 0);
+                }
+            });
+        }
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        clickListener();
+        setUpDrawerLayout();
 
         if (savedInstanceState == null) {
             setMusicChooser(PreferenceUtil.getInstance(this).getLastMusicChooser());
@@ -72,79 +109,67 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setMusicChooser(int key) {
+        PreferenceUtil.getInstance(this).setLastMusicChooser(key);
+        switch (key) {
+            case LIBRARY:
+                navigationView.setCheckedItem(R.id.nav_library);
+                setCurrentFragment(LibraryFragment.newInstance());
+                break;
+            case FILES:
+                navigationView.setCheckedItem(R.id.nav_file);
+                setCurrentFragment(FilesFragment.newInstance(this));
+                break;
+            case FAV:
+                navigationView.setCheckedItem(R.id.nav_my_favorite);
+                setCurrentFragment(FavouriteFragment.newInstance());
+                break;
+        }
+    }
+
+    private void setCurrentFragment(@SuppressWarnings("NullableProblems") Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, null).commit();
+        currentFragment = (MainActivityFragmentCallbacks) fragment;
+    }
+
+    private void restoreCurrentFragment() {
+        currentFragment = (MainActivityFragmentCallbacks) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == APP_INTRO_REQUEST) {
-            //Set permission
-            askPermission();
-        }
-    }
-
-    private void askPermission() {
-        Functions.setPermission(this, new String[]{
-
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE
-                }
-                , new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-
-                    }
-
-                    @Override
-                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                        finish();
-                    }
-                });
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+            blockRequestPermissions = false;
+            if (!hasPermissions()) {
+                requestPermissions();
+            }
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void requestPermissions() {
+        if (!blockRequestPermissions) super.requestPermissions();
     }
-
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_equalizer:
-                //  NavigationUtil.openEqualizer(getActivity());
-                return true;
-            case R.id.action_shuffle_all:
-                // MusicPlayerRemote.openAndShuffleQueue(SongLoader.getAllSongs(getActivity()), true);
-                return true;
-            case R.id.group_grid_size:
-
-                return true;
-            case R.id.action_search:
-                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected View createContentView() {
+        @SuppressLint("InflateParams")
+        View contentView = getLayoutInflater().inflate(R.layout.activity_main, null);
+        ViewGroup drawerContent = ButterKnife.findById(contentView, R.id.drawer_content_container);
+        drawerContent.addView(wrapSlidingMusicPanel(R.layout.activity_main_content));
+        return contentView;
     }
 
-    private void clickListener() {
+    private void setUpNavigationView() {
+        int accentColor = ThemeStore.accentColor(this);
+        NavigationViewUtil.setItemIconColors(navigationView, ATHUtil.resolveColor(this, R.attr.iconColor, ThemeStore.textColorSecondary(this)), accentColor);
+        NavigationViewUtil.setItemTextColors(navigationView, ThemeStore.textColorPrimary(this), accentColor);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawerLayout.closeDrawers();
                 switch (item.getItemId()) {
                     case R.id.nav_library:
                         setMusicChooser(LIBRARY);
@@ -169,46 +194,156 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
-    private void setMusicChooser(int key) {
-        PreferenceUtil.getInstance(this).setLastMusicChooser(key);
-        switch (key) {
-            case LIBRARY:
-                navigationView.setCheckedItem(R.id.nav_library);
-                setFragment(LibraryFragment.newInstance());
-                break;
-            case FILES:
-                navigationView.setCheckedItem(R.id.nav_file);
-                setFragment(FilesFragment.newInstance());
-                break;
-            case FAV:
-                navigationView.setCheckedItem(R.id.nav_my_favorite);
-                setFragment(FavouriteFragment.newInstance());
-                break;
+    private void setUpDrawerLayout() {
+        setUpNavigationView();
+    }
+
+
+    private void updateNavigationDrawerHeader() {
+        if (!MusicPlayerRemote.getPlayingQueue().isEmpty()) {
+            Song song = MusicPlayerRemote.getCurrentSong();
+            if (navigationDrawerHeader == null) {
+                navigationDrawerHeader = navigationView.inflateHeaderView(R.layout.nav_header_main);
+                //noinspection ConstantConditions
+                navigationDrawerHeader.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        drawerLayout.closeDrawers();
+                        if (getPanelState() == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                            expandPanel();
+                        }
+                    }
+                });
+            }
+            ((TextView) navigationDrawerHeader.findViewById(R.id.title)).setText(song.title);
+            ((TextView) navigationDrawerHeader.findViewById(R.id.text)).setText(song.artistName);
+            SongGlideRequest.Builder.from(Glide.with(this), song)
+                    .checkIgnoreMediaStore(this).build()
+                    .into(((ImageView) navigationDrawerHeader.findViewById(R.id.image)));
+        } else {
+            if (navigationDrawerHeader != null) {
+                navigationView.removeHeaderView(navigationDrawerHeader);
+                navigationDrawerHeader = null;
+            }
         }
     }
 
-    private void setFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame, fragment);
-        fragmentTransaction.commit();
-
-        // Set action bar title
-        setTitle(getTitle());
-        // Close the navigation drawer
-         mDrawerLayout.closeDrawers();
+    @Override
+    public void onPlayingMetaChanged() {
+        super.onPlayingMetaChanged();
+        updateNavigationDrawerHeader();
     }
 
-    private void restoreCurrentFragment() {
-        currentFragment = (MainActivity.MainActivityFragmentCallbacks) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+    @Override
+    public void onServiceConnected() {
+        super.onServiceConnected();
+        updateNavigationDrawerHeader();
+        handlePlaybackIntent(getIntent());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (drawerLayout.isDrawerOpen(navigationView)) {
+                drawerLayout.closeDrawer(navigationView);
+            } else {
+                drawerLayout.openDrawer(navigationView);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean handleBackPress() {
+        if (drawerLayout.isDrawerOpen(navigationView)) {
+            drawerLayout.closeDrawers();
+            return true;
+        }
+        return super.handleBackPress() || (currentFragment != null && currentFragment.handleBackPress());
+    }
+
+    private void handlePlaybackIntent(@Nullable Intent intent) {
+        if (intent == null) {
+            return;
+        }
+
+        Uri uri = intent.getData();
+        String mimeType = intent.getType();
+        boolean handled = false;
+
+        if (intent.getAction() != null && intent.getAction().equals(MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH)) {
+            final ArrayList<Song> songs = SearchQueryHelper.getSongs(this, intent.getExtras());
+            if (MusicPlayerRemote.getShuffleMode() == MusicService.SHUFFLE_MODE_SHUFFLE) {
+                MusicPlayerRemote.openAndShuffleQueue(songs, true);
+            } else {
+                MusicPlayerRemote.openQueue(songs, 0, true);
+            }
+            handled = true;
+        }
+
+        if (uri != null && uri.toString().length() > 0) {
+            MusicPlayerRemote.playFromUri(uri);
+            handled = true;
+        } else if (MediaStore.Audio.Playlists.CONTENT_TYPE.equals(mimeType)) {
+            final int id = (int) parseIdFromIntent(intent, "playlistId", "playlist");
+            if (id >= 0) {
+                int position = intent.getIntExtra("position", 0);
+                ArrayList<Song> songs = new ArrayList<>();
+                songs.addAll(PlaylistSongLoader.getPlaylistSongList(this, id));
+                MusicPlayerRemote.openQueue(songs, position, true);
+                handled = true;
+            }
+        } else if (MediaStore.Audio.Albums.CONTENT_TYPE.equals(mimeType)) {
+            final int id = (int) parseIdFromIntent(intent, "albumId", "album");
+            if (id >= 0) {
+                int position = intent.getIntExtra("position", 0);
+                MusicPlayerRemote.openQueue(AlbumLoader.getAlbum(this, id).songs, position, true);
+                handled = true;
+            }
+        } else if (MediaStore.Audio.Artists.CONTENT_TYPE.equals(mimeType)) {
+            final int id = (int) parseIdFromIntent(intent, "artistId", "artist");
+            if (id >= 0) {
+                int position = intent.getIntExtra("position", 0);
+                MusicPlayerRemote.openQueue(ArtistSongLoader.getArtistSongList(this, id), position, true);
+                handled = true;
+            }
+        }
+        if (handled) {
+            setIntent(new Intent());
+        }
+    }
+
+    private long parseIdFromIntent(@NonNull Intent intent, String longKey,
+                                   String stringKey) {
+        long id = intent.getLongExtra(longKey, -1);
+        if (id < 0) {
+            String idString = intent.getStringExtra(stringKey);
+            if (idString != null) {
+                try {
+                    id = Long.parseLong(idString);
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        }
+        return id;
+    }
+
+
+    @Override
+    public void onPanelCollapsed(View view) {
+        super.onPanelCollapsed(view);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     private boolean checkShowIntro() {
         if (!PreferenceUtil.getInstance(this).introShown()) {
             PreferenceUtil.getInstance(this).setIntroShown();
+            ChangelogDialog.setChangelogRead(this);
+            blockRequestPermissions = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -225,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             int currentVersion = pInfo.versionCode;
             if (currentVersion != PreferenceUtil.getInstance(this).getLastChangelogVersion()) {
-                //ChangelogDialog.create().show(getSupportFragmentManager(), "CHANGE_LOG_DIALOG");
+                ChangelogDialog.create().show(getSupportFragmentManager(), "CHANGE_LOG_DIALOG");
                 return true;
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -234,8 +369,40 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
-    private interface MainActivityFragmentCallbacks {
+    public interface MainActivityFragmentCallbacks {
         boolean handleBackPress();
     }
+
+
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }*/
+
+
+   /* @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_equalizer:
+                //  NavigationUtil.openEqualizer(getActivity());
+                return true;
+            case R.id.action_shuffle_all:
+                // MusicPlayerRemote.openAndShuffleQueue(SongLoader.getAllSongs(getActivity()), true);
+                return true;
+            case R.id.group_grid_size:
+
+                return true;
+            case R.id.action_search:
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
+
 }

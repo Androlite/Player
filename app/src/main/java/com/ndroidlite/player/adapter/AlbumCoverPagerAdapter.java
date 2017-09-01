@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ndroidlite.player.R;
-import com.ndroidlite.player.imageHandler.PhonographColoredTarget;
+import com.ndroidlite.player.imageHandler.PlayerColoredTarget;
 import com.ndroidlite.player.imageHandler.SongGlideRequest;
 import com.ndroidlite.player.misc.CustomFragmentStatePagerAdapter;
 import com.ndroidlite.player.model.Song;
@@ -73,15 +73,12 @@ public class AlbumCoverPagerAdapter extends CustomFragmentStatePagerAdapter {
     public static class AlbumCoverFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         private static final String SONG_ARG = "song";
 
-
-        ImageView albumCover;
-
         private boolean isColorReady;
         private int color;
         private Song song;
         private ColorReceiver colorReceiver;
         private int request;
-        private ImageView player_img;
+        private ImageView albumCover;
 
         public static AlbumCoverFragment newInstance(final Song song) {
             AlbumCoverFragment frag = new AlbumCoverFragment();
@@ -101,7 +98,7 @@ public class AlbumCoverPagerAdapter extends CustomFragmentStatePagerAdapter {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_album_cover, container, false);
-            player_img=(ImageView)view.findViewById(R.id.player_image);
+            albumCover=(ImageView)view.findViewById(R.id.player_image);
             return view;
         }
 
@@ -126,7 +123,7 @@ public class AlbumCoverPagerAdapter extends CustomFragmentStatePagerAdapter {
             SongGlideRequest.Builder.from(Glide.with(this), song)
                     .checkIgnoreMediaStore(getActivity())
                     .generatePalette(getActivity()).build()
-                    .into(new PhonographColoredTarget(albumCover) {
+                    .into(new PlayerColoredTarget(albumCover) {
                         @Override
                         public void onColorReady(int color) {
                             setColor(color);

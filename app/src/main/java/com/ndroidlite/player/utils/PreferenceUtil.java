@@ -392,9 +392,9 @@ public final class PreferenceUtil {
         return mPreferences.getString(AUTO_DOWNLOAD_IMAGES_POLICY, "only_wifi");
     }
 
-   /* public final File getStartDirectory() {
+    public final File getStartDirectory() {
         return new File(mPreferences.getString(START_DIRECTORY, FilesFragment.getDefaultStartDirectory().getPath()));
-    }*/
+    }
 
     public void setStartDirectory(File file) {
         final SharedPreferences.Editor editor = mPreferences.edit();

@@ -24,7 +24,7 @@ import com.ndroidlite.player.model.Playlist;
 public class NavigationUtil {
     public static void goToArtist(@NonNull final Activity activity, final int artistId, @Nullable Pair... sharedElements) {
         final Intent intent = new Intent(activity, ArtistDetailActivity.class);
-        //intent.putExtra(ArtistDetailActivity.EXTRA_ARTIST_ID, artistId);
+        intent.putExtra(ArtistDetailActivity.EXTRA_ARTIST_ID, artistId);
 
         //noinspection unchecked
         activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedElements).toBundle());
@@ -32,7 +32,7 @@ public class NavigationUtil {
 
     public static void goToAlbum(@NonNull final Activity activity, final int albumId, @Nullable Pair... sharedElements) {
         final Intent intent = new Intent(activity, AlbumDetailActivity.class);
-        //intent.putExtra(AlbumDetailActivity.EXTRA_ALBUM_ID, albumId);
+        intent.putExtra(AlbumDetailActivity.EXTRA_ALBUM_ID, albumId);
 
         //noinspection unchecked
         activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedElements).toBundle());
@@ -40,7 +40,7 @@ public class NavigationUtil {
 
     public static void goToPlaylist(@NonNull final Activity activity, final Playlist playlist, @Nullable Pair... sharedElements) {
         final Intent intent = new Intent(activity, PlaylistDetailActivity.class);
-       // intent.putExtra(PlaylistDetailActivity.EXTRA_PLAYLIST, playlist);
+        intent.putExtra(PlaylistDetailActivity.EXTRA_PLAYLIST, playlist);
 
         activity.startActivity(intent);
     }

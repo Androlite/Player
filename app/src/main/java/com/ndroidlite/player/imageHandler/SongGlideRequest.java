@@ -12,6 +12,7 @@ import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.signature.MediaStoreSignature;
+import com.ndroidlite.player.R;
 import com.ndroidlite.player.imageHandler.audioCover.AudioFileCover;
 import com.ndroidlite.player.imageHandler.palette.BitmapPaletteTranscoder;
 import com.ndroidlite.player.imageHandler.palette.BitmapPaletteWrapper;
@@ -25,7 +26,7 @@ import com.ndroidlite.player.utils.PreferenceUtil;
 
 public class SongGlideRequest {
     public static final DiskCacheStrategy DEFAULT_DISK_CACHE_STRATEGY = DiskCacheStrategy.NONE;
-    public static final int DEFAULT_ERROR_IMAGE = 0;
+    public static final int DEFAULT_ERROR_IMAGE = R.drawable.default_album_art;
     public static final int DEFAULT_ANIMATION = android.R.anim.fade_in;
 
     public static class Builder {

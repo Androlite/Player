@@ -54,6 +54,7 @@ public class Util {
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void setAllowDrawUnderStatusBar(@NonNull Window window) {
         window.getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE

@@ -16,11 +16,12 @@ import com.bumptech.glide.Glide;
 import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.adapter.base.AdlMultiSelectAdapter;
 import com.ndroidlite.player.adapter.base.MediaEntryViewHolder;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.helper.menu.SongMenuHelper;
 import com.ndroidlite.player.helper.menu.SongsMenuHelper;
-import com.ndroidlite.player.imageHandler.PhonographColoredTarget;
+import com.ndroidlite.player.imageHandler.PlayerColoredTarget;
 import com.ndroidlite.player.imageHandler.SongGlideRequest;
 import com.ndroidlite.player.interfaces.CabHolder;
 import com.ndroidlite.player.model.Song;
@@ -135,7 +136,7 @@ public class SongAdapter extends AdlMultiSelectAdapter<SongAdapter.ViewHolder, S
         SongGlideRequest.Builder.from(Glide.with(activity), song)
                 .checkIgnoreMediaStore(activity)
                 .generatePalette(activity).build()
-                .into(new PhonographColoredTarget(holder.image) {
+                .into(new PlayerColoredTarget(holder.image) {
                     @Override
                     public void onLoadCleared(Drawable placeholder) {
                         super.onLoadCleared(placeholder);

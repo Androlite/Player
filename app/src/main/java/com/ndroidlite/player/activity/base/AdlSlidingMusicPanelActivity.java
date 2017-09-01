@@ -5,16 +5,16 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.PathInterpolator;
-import android.widget.FrameLayout;
 
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.fragments.player.AdlPlayerFragment;
@@ -27,13 +27,15 @@ import com.ndroidlite.player.utils.PreferenceUtil;
 import com.ndroidlite.player.utils.ViewUtil;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-/**
- * Created by chiragpatel on 24-07-2017.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Optional;
+
 
 public abstract class AdlSlidingMusicPanelActivity extends AdlMusicServiceActivity implements SlidingUpPanelLayout.PanelSlideListener, CardPlayerFragment.Callbacks {
     public static final String TAG = AdlSlidingMusicPanelActivity.class.getSimpleName();
 
+    @BindView(R.id.sliding_layout)
     SlidingUpPanelLayout slidingUpPanelLayout;
 
     private int navigationbarColor;
@@ -41,19 +43,20 @@ public abstract class AdlSlidingMusicPanelActivity extends AdlMusicServiceActivi
     private boolean lightStatusbar;
 
     private NowPlayingScreen currentNowPlayingScreen;
-    private AdlPlayerFragment playerFragment;
     private MiniPlayerFragment miniPlayerFragment;
 
     private ValueAnimator navigationBarColorAnimator;
     private ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+    private AdlPlayerFragment playerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(createContentView());
+        ButterKnife.bind(this);
 
         currentNowPlayingScreen = PreferenceUtil.getInstance(this).getNowPlayingScreen();
-        Fragment fragment; // must implement AdlPlayerFragment
+        Fragment fragment; // must implement AbsPlayerFragment
         switch (currentNowPlayingScreen) {
             case FLAT:
                 fragment = new FlatPlayerFragment();
@@ -200,8 +203,8 @@ public abstract class AdlSlidingMusicPanelActivity extends AdlMusicServiceActivi
 
     protected View wrapSlidingMusicPanel(@LayoutRes int resId) {
         @SuppressLint("InflateParams")
-        View slidingMusicPanelLayout = getLayoutInflater().inflate(R.layout.sliding_music_panel_layout, null);
-        FrameLayout contentContainer = (FrameLayout) slidingMusicPanelLayout.findViewById(R.id.content_container);
+        View slidingMusicPanelLayout = getLayoutInflater().inflate(R.layout.activity_adl_sliding_music_panel, null);
+        ViewGroup contentContainer = ButterKnife.findById(slidingMusicPanelLayout, R.id.content_container);
         getLayoutInflater().inflate(resId, contentContainer);
         return slidingMusicPanelLayout;
     }

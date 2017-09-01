@@ -54,6 +54,10 @@ import com.ndroidlite.player.utils.ViewUtil;
 import com.ndroidlite.player.views.WidthFitSquareLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -62,11 +66,19 @@ public class CardPlayerFragment extends AdlPlayerFragment
 
     public static final String TAG = CardPlayerFragment.class.getSimpleName();
 
+    private Unbinder unbinder;
+
+    @BindView(R.id.player_toolbar)
     Toolbar toolbar;
+    @BindView(R.id.player_sliding_layout)
     SlidingUpPanelLayout slidingUpPanelLayout;
+    @BindView(R.id.player_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.playing_queue_card)
     CardView playingQueueCard;
+    @BindView(R.id.color_background)
     View colorBackground;
+    @BindView(R.id.player_queue_sub_header)
     TextView playerQueueSubHeader;
 
     private int lastColor;
@@ -97,14 +109,7 @@ public class CardPlayerFragment extends AdlPlayerFragment
         }
 
         View view = inflater.inflate(R.layout.fragment_card_player, container, false);
-
-        toolbar = (Toolbar) view.findViewById(R.id.player_toolbar);
-        slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.player_sliding_layout);
-        recyclerView = (RecyclerView) view.findViewById(R.id.player_recycler_view);
-        playingQueueCard = (CardView) view.findViewById(R.id.playing_queue_card);
-        colorBackground = (View) view.findViewById(R.id.color_background);
-        playerQueueSubHeader = (TextView) view.findViewById(R.id.player_queue_sub_header);
-
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -157,6 +162,7 @@ public class CardPlayerFragment extends AdlPlayerFragment
         playingQueueAdapter = null;
         layoutManager = null;
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override

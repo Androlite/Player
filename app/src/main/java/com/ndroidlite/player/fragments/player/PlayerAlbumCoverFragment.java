@@ -27,6 +27,10 @@ import com.ndroidlite.player.model.lyrics.Lyrics;
 import com.ndroidlite.player.utils.PreferenceUtil;
 import com.ndroidlite.player.utils.ViewUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -36,12 +40,18 @@ public class PlayerAlbumCoverFragment extends AdlMusicServiceFragment implements
 
     public static final int LYRICS_ANIM_DURATION = 300;
 
+    private Unbinder unbinder;
 
+    @BindView(R.id.player_album_cover_viewpager)
     ViewPager viewPager;
+    @BindView(R.id.player_favorite_icon)
     ImageView favoriteIcon;
 
+    @BindView(R.id.player_lyrics)
     FrameLayout lyricsLayout;
+    @BindView(R.id.player_lyrics_line1)
     TextView lyricsLine1;
+    @BindView(R.id.player_lyrics_line2)
     TextView lyricsLine2;
 
     private Callbacks callbacks;
@@ -50,12 +60,13 @@ public class PlayerAlbumCoverFragment extends AdlMusicServiceFragment implements
     private Lyrics lyrics;
     private MusicProgressViewUpdateHelper progressViewUpdateHelper;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_player_album_cover, container, false);
+        View view = inflater.inflate(R.layout.fragment_player_album_cover, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -88,6 +99,7 @@ public class PlayerAlbumCoverFragment extends AdlMusicServiceFragment implements
         super.onDestroyView();
         viewPager.removeOnPageChangeListener(this);
         progressViewUpdateHelper.stop();
+        unbinder.unbind();
     }
 
     @Override

@@ -1,43 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+    <style name="Theme.Player" parent="Theme.Player.Light" />
 
+    <style name="Theme.Player.Light" parent="Theme.Player.Base.Light" />
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="Theme.Player" parent="Theme.AppCompat.Light" />
-
-    <style name="Theme.Player.Light" parent="Base.ThemeOverlay.AppCompat.Light" />
-
-    <style name="Theme.Player.Black" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Player.Black" parent="Theme.Player.Base.Black" />
 
     <style name="Theme.Player.Notification" parent="@android:style/TextAppearance.StatusBar.EventContent" />
 
     <style name="Theme.Player.Notification.Title" parent="@android:style/TextAppearance.StatusBar.EventContent.Title" />
 
-    <style name="MusicProgressSlider" parent="MusicProgressSliderParent">
-        <item name="android:thumbOffset">0dp</item>
-    </style>
-
-    <style name="Fab" parent="FabParent" />
-
-    <style name="Toolbar">
-        <item name="titleMarginStart">16dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?actionBarSize</item>
-        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="popupTheme">?toolbarPopupTheme</item>
-        <item name="android:elevation" tools:ignore="NewApi">@dimen/dimen_4dp</item>
-        <item name="android:transitionName" tools:ignore="NewApi">toolbar</item>
-    </style>
 
     <style name="OverFlowButton">
         <item name="srcCompat">@drawable/ic_more_vert_white_24dp</item>
@@ -50,4 +22,39 @@
         <item name="android:focusable">false</item>
     </style>
 
+    <style name="PlayingIndicator">
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="Fab" parent="FabParent" />
+
+    <style name="MusicProgressSlider" parent="MusicProgressSliderParent">
+        <item name="android:thumbOffset">0dp</item>
+    </style>
+
+    <style name="TraditionalMusicProgressSlider" parent="TraditionalMusicProgressSliderParent">
+        <item name="android:thumbOffset">0dp</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="titleMarginStart">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">?toolbarPopupTheme</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/dimen_4dp</item>
+        <item name="android:transitionName" tools:ignore="NewApi">toolbar</item>
+    </style>
+
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

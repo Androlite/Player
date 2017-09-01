@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.ndroidlite.player.R;
 
+import butterknife.BindView;
+
 /**
  * Created by chiragpatel on 26-07-2017.
  */

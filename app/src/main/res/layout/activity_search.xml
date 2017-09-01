@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.ndroidlite.player.activity.SearchActivity">
 
+    <include layout="@layout/status_bar" />
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        style="@style/Toolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -26,14 +23,14 @@
             android:scrollbars="vertical" />
 
         <TextView
-            android:id="@android:id/empty"
+            android:id="@+id/empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-light"
-            android:text="No result found"
+            android:text="@string/no_results"
             android:textColor="?android:textColorSecondary"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp20" />
 
     </FrameLayout>
 </LinearLayout>

@@ -1,29 +1,112 @@
 package com.ndroidlite.player.activity;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
 
+import com.kabouzeid.appthemehelper.ThemeStore;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.activity.base.AdlMusicServiceActivity;
+import com.ndroidlite.player.adapter.SearchAdapter;
+import com.ndroidlite.player.interfaces.LoaderIds;
+import com.ndroidlite.player.loader.AlbumLoader;
+import com.ndroidlite.player.loader.ArtistLoader;
+import com.ndroidlite.player.loader.SongLoader;
+import com.ndroidlite.player.misc.WrappedAsyncTaskLoader;
+import com.ndroidlite.player.utils.Util;
 
-public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    private SearchView searchView;
+import butterknife.BindView;
+
+public class SearchActivity extends AdlMusicServiceActivity implements SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<List<Object>> {
+
+    public static final String TAG = SearchActivity.class.getSimpleName();
+    public static final String QUERY = "query";
+    private static final int LOADER_ID = LoaderIds.SEARCH_ACTIVITY;
+
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private TextView empty;
+    SearchView searchView;
+
+    private SearchAdapter adapter;
     private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        setDrawUnderStatusbar(true);
 
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        empty = (TextView) findViewById(R.id.empty);
+
+        setStatusbarColorAuto();
+        setNavigationbarColorAuto();
+        setTaskDescriptionColorAuto();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new SearchAdapter(this, Collections.emptyList());
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                empty.setVisibility(adapter.getItemCount() < 1 ? View.VISIBLE : View.GONE);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideSoftKeyboard();
+                return false;
+            }
+        });
+
+        setUpToolBar();
+
+        if (savedInstanceState != null) {
+            query = savedInstanceState.getString(QUERY);
+        }
+
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(QUERY, query);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private void setUpToolBar() {
+        toolbar.setBackgroundColor(ThemeStore.primaryColor(this));
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     @Override
@@ -61,12 +144,90 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void search(@NonNull String query) {
+        this.query = query;
+        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onMediaStoreChanged() {
+        super.onMediaStoreChanged();
+        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
+        hideSoftKeyboard();
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        search(newText);
         return false;
     }
+
+    private void hideSoftKeyboard() {
+        Util.hideSoftKeyboard(SearchActivity.this);
+        if (searchView != null) {
+            searchView.clearFocus();
+        }
+    }
+
+    @Override
+    public Loader<List<Object>> onCreateLoader(int id, Bundle args) {
+        return new AsyncSearchResultLoader(this, query);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Object>> loader, List<Object> data) {
+        adapter.swapDataSet(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Object>> loader) {
+        adapter.swapDataSet(Collections.emptyList());
+    }
+
+    private static class AsyncSearchResultLoader extends WrappedAsyncTaskLoader<List<Object>> {
+        private final String query;
+
+        public AsyncSearchResultLoader(Context context, String query) {
+            super(context);
+            this.query = query;
+        }
+
+        @Override
+        public List<Object> loadInBackground() {
+            List<Object> results = new ArrayList<>();
+            if (!TextUtils.isEmpty(query)) {
+                List songs = SongLoader.getSongs(getContext(), query);
+                if (!songs.isEmpty()) {
+                    results.add(getContext().getResources().getString(R.string.songs));
+                    results.addAll(songs);
+                }
+
+                List artists = ArtistLoader.getArtists(getContext(), query);
+                if (!artists.isEmpty()) {
+                    results.add(getContext().getResources().getString(R.string.artists));
+                    results.addAll(artists);
+                }
+
+                List albums = AlbumLoader.getAlbums(getContext(), query);
+                if (!albums.isEmpty()) {
+                    results.add(getContext().getResources().getString(R.string.albums));
+                    results.addAll(albums);
+                }
+            }
+            return results;
+        }
+    }
+
 }

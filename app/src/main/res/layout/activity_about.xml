@@ -8,7 +8,4 @@
     android:orientation="vertical"
     tools:context="com.ndroidlite.player.activity.AboutActivity">
 
-    <include layout="@layout/app_bar_main" />
-
-
 </LinearLayout>
