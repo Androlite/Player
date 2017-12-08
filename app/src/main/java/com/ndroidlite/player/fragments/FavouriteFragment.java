@@ -33,6 +33,7 @@ import com.ndroidlite.player.activity.PlaylistDetailActivity;
 import com.ndroidlite.player.adapter.SongAdapter;
 import com.ndroidlite.player.adapter.song.CustomPlaylistSongAdapter;
 import com.ndroidlite.player.adapter.song.PlaylistSongAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.SleepTimerDialog;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.interfaces.CabHolder;
@@ -67,7 +68,7 @@ public class FavouriteFragment extends AdlMainActivityFragment implements CabHol
     private MaterialCab cab;
     private Toolbar toolbar;
     private AppBarLayout appbar;
-    private TextView empty;
+    private TfTextView empty;
     private FastScrollRecyclerView recyclerView;
     private SongAdapter adapter;
     private Playlist playlist;
@@ -102,12 +103,16 @@ public class FavouriteFragment extends AdlMainActivityFragment implements CabHol
         contain = view.findViewById(R.id.container);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
-        empty = (TextView) view.findViewById(R.id.empty);
+        empty = (TfTextView) view.findViewById(R.id.empty);
         recyclerView = (FastScrollRecyclerView) view.findViewById(R.id.recycler_view);
 
         playlist = MusicUtil.getFavoritesPlaylist(getActivity());
         Log.e("fav", playlist.toString());
+        setUpToolbar();
 
+        setUpRecyclerView();
+
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         return view;
     }
 
@@ -116,12 +121,6 @@ public class FavouriteFragment extends AdlMainActivityFragment implements CabHol
         setStatusbarColorAuto(view);
         getMainActivity().setNavigationbarColorAuto();
         getMainActivity().setTaskDescriptionColorAuto();
-
-        setUpToolbar();
-
-        setUpRecyclerView();
-
-        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     private void setUpToolbar() {

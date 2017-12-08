@@ -2,7 +2,9 @@ package com.ndroidlite.player.fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.afollestad.materialcab.MaterialCab;
 import com.kabouzeid.appthemehelper.ThemeStore;
@@ -28,6 +31,8 @@ import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.MainActivity;
 import com.ndroidlite.player.activity.SearchActivity;
 import com.ndroidlite.player.adapter.MusicLibraryPagerAdapter;
+import com.ndroidlite.player.custom.FontType;
+import com.ndroidlite.player.custom.Functions;
 import com.ndroidlite.player.custom.TabMenuAdapter;
 import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.CreatePlaylistDialog;
@@ -44,13 +49,11 @@ import com.ndroidlite.player.utils.Util;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LibraryFragment extends AdlMainActivityFragment implements CabHolder, MainActivity.MainActivityFragmentCallbacks,ViewPager.OnPageChangeListener {
+public class LibraryFragment extends AdlMainActivityFragment implements CabHolder, MainActivity.MainActivityFragmentCallbacks, ViewPager.OnPageChangeListener {
     public static final String TAG = LibraryFragment.class.getSimpleName();
     private Toolbar toolbar;
     private ViewPager pager;
     private TabLayout tabs;
-    private TabMenuAdapter tabMenuAdapter;
-    private TfTextView txtTitle;
     private MaterialCab cab;
     private AppBarLayout appbar;
     private MusicLibraryPagerAdapter pagerAdapter;
@@ -113,7 +116,7 @@ public class LibraryFragment extends AdlMainActivityFragment implements CabHolde
         TabLayoutUtil.setTabIconColors(tabs, normalColor, selectedColor);
         tabs.setTabTextColors(normalColor, selectedColor);
         tabs.setSelectedTabIndicatorColor(ThemeStore.accentColor(getActivity()));
-
+        changeTabsFont(getActivity(), tabs);
         int startPosition = PreferenceUtil.getInstance(getActivity()).getDefaultStartPage();
         startPosition = startPosition == -1 ? PreferenceUtil.getInstance(getActivity()).getLastPage() : startPosition;
         pager.setCurrentItem(startPosition);
@@ -313,6 +316,23 @@ public class LibraryFragment extends AdlMainActivityFragment implements CabHolde
         return false;
     }
 
+    public static void changeTabsFont(Context context, TabLayout tabLayout) {
+
+        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    ((TextView) tabViewChild).setTypeface(Functions.getFontType(context, FontType.Bold.getId()));
+                    ((TextView)tabViewChild).setTextSize(R.dimen.sp14);
+                }
+            }
+        }
+    }
+
     /*private void init(View view) {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
@@ -372,6 +392,7 @@ public class LibraryFragment extends AdlMainActivityFragment implements CabHolde
         });
 
     }*/
+
 
     @Override
     public boolean handleBackPress() {

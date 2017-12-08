@@ -6,10 +6,17 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.custom.FontType;
+import com.ndroidlite.player.custom.Functions;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.fragments.library.AlbumsFragment;
 import com.ndroidlite.player.fragments.library.ArtistFragment;
 import com.ndroidlite.player.fragments.library.PlaylistsFragment;
@@ -130,4 +137,5 @@ public class MusicLibraryPagerAdapter extends FragmentPagerAdapter {
 
         Bundle mParams;
     }
+
 }

@@ -34,6 +34,7 @@ import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.base.AdlSlidingMusicPanelActivity;
 import com.ndroidlite.player.adapter.AlbumSongAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.SleepTimerDialog;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.imageHandler.PlayerColoredTarget;
@@ -67,7 +68,7 @@ public class AlbumDetailActivity extends AdlSlidingMusicPanelActivity implements
     private ImageView albumArtImageView;
     private View songsBackgroundView;
     private ObservableRecyclerView recyclerView;
-    private TextView albumTitleView;
+    private TfTextView albumTitleView;
     private AlbumSongAdapter adapter;
     private MaterialCab cab;
     private int headerOffset;
@@ -91,7 +92,7 @@ public class AlbumDetailActivity extends AdlSlidingMusicPanelActivity implements
         albumArtImageView = (ImageView) findViewById(R.id.image);
         songsBackgroundView = (View) findViewById(R.id.list_background);
         recyclerView = (ObservableRecyclerView) findViewById(R.id.list);
-        albumTitleView = (TextView) findViewById(R.id.title);
+        albumTitleView = (TfTextView) findViewById(R.id.title);
 
         supportPostponeEnterTransition();
 

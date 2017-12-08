@@ -36,6 +36,7 @@ import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.base.AdlSlidingMusicPanelActivity;
 import com.ndroidlite.player.adapter.album.HorizontalAlbumAdapter;
 import com.ndroidlite.player.adapter.song.ArtistSongAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.SleepTimerDialog;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.imageHandler.PlayerColoredTarget;
@@ -85,7 +86,7 @@ public class ArtistDetailActivity extends AdlSlidingMusicPanelActivity implement
     private ImageView artistImage;
     private View songListBackground;
     private ObservableListView songListView;
-    private TextView artistName;
+    private TfTextView artistName;
 
     // private LastFMRestClient lastFMRestClient;
     @Override
@@ -98,7 +99,7 @@ public class ArtistDetailActivity extends AdlSlidingMusicPanelActivity implement
         artistImage = (ImageView) findViewById(R.id.image);
         songListBackground = (View) findViewById(R.id.list_background);
         songListView = (ObservableListView) findViewById(R.id.list);
-        artistName = (TextView) findViewById(R.id.title);
+        artistName = (TfTextView) findViewById(R.id.title);
 
         supportPostponeEnterTransition();
 

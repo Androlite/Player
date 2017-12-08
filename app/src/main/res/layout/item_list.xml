@@ -43,12 +43,12 @@
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/image_text"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
                 android:gravity="center"
+                app:ftype="semibold"
                 android:minHeight="@dimen/dimen_40dp"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -67,20 +67,22 @@
             android:paddingRight="0dp"
             android:paddingStart="@dimen/dimen_16dp">
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
                 android:singleLine="true"
+                app:ftype="semibold"
+                android:textSize="@dimen/sp14"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
                 android:singleLine="true"
+                app:ftype="medium"
+                android:textSize="@dimen/sp12"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="?android:textColorSecondary" />
         </LinearLayout>

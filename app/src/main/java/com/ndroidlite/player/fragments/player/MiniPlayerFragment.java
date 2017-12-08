@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.ATHUtil;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.helper.MusicProgressViewUpdateHelper;
 import com.ndroidlite.player.helper.PlayPauseButtonOnClickHandler;
@@ -36,7 +37,7 @@ public class MiniPlayerFragment extends AdlMusicServiceFragment implements Music
     private Unbinder unbinder;
 
     @BindView(R.id.mini_player_title)
-    TextView miniPlayerTitle;
+    TfTextView miniPlayerTitle;
     @BindView(R.id.mini_player_play_pause_button)
     ImageView miniPlayerPlayPauseButton;
     @BindView(R.id.progress_bar)
@@ -62,7 +63,7 @@ public class MiniPlayerFragment extends AdlMusicServiceFragment implements Music
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mini_player, container, false);
 
-        miniPlayerTitle=(TextView)view.findViewById(R.id.mini_player_title);
+        miniPlayerTitle=(TfTextView) view.findViewById(R.id.mini_player_title);
         miniPlayerPlayPauseButton=(IconImageView)view.findViewById(R.id.mini_player_play_pause_button);
         progressBar=(MaterialProgressBar)view.findViewById(R.id.progress_bar);
 

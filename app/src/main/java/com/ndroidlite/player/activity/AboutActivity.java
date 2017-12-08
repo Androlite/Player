@@ -7,9 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.kabouzeid.appthemehelper.ThemeStore;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.activity.base.AdlBaseActivity;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends AdlBaseActivity {
+    public static final String TAG = AboutActivity.class.getSimpleName();
     private Toolbar toolbar;
 
     @Override
@@ -17,21 +20,19 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        setDrawUnderStatusbar(true);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        initToolbar();
+        setStatusbarColorAuto();
+        setNavigationbarColorAuto();
+        setTaskDescriptionColorAuto();
+
+        toolbar.setBackgroundColor(ThemeStore.primaryColor(this));
+        setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
         clickListener();
-    }
-
-    private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("About Us");
-        //txtTitle = (TextView) findViewById(R.id.txtTitle);
-        toolbar.setTitleTextColor(Color.WHITE);
-        ///txtTitle.setText(getResources().getString(R.string.product_list));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void init() {
@@ -42,7 +43,7 @@ public class AboutActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
     }

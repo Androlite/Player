@@ -12,29 +12,29 @@
         android:layout_height="@dimen/dimen_20dp"
         android:background="@color/twenty_percent_black_overlay">
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/player_song_current_progress"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical|left|end"
             android:paddingLeft="8dp"
             android:singleLine="true"
+            app:ftype="medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/ate_primary_text_dark"
             android:textSize="12sp"
             tools:ignore="RtlHardcoded,RtlSymmetry"
             tools:text="0:00" />
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/player_song_total_time"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical|right|end"
             android:paddingRight="8dp"
+            app:ftype="medium"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/ate_primary_text_dark"

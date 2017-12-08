@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.kabouzeid.appthemehelper.util.MaterialValueHelper;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.fragments.player.AdlMusicServiceFragment;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.helper.MusicProgressViewUpdateHelper;
@@ -42,8 +43,8 @@ public class FlatPlayerPlaybackControlsFragment extends AdlMusicServiceFragment 
     ImageButton repeatButton;
     ImageButton shuffleButton;
     SeekBar progressSlider;
-    TextView songTotalTime;
-    TextView songCurrentProgress;
+    TfTextView songTotalTime;
+    TfTextView songCurrentProgress;
 
     private PlayPauseDrawable playPauseDrawable;
 
@@ -76,8 +77,8 @@ public class FlatPlayerPlaybackControlsFragment extends AdlMusicServiceFragment 
         repeatButton=(ImageButton)view.findViewById(R.id.player_repeat_button);
         shuffleButton=(ImageButton)view.findViewById(R.id.player_shuffle_button);
         progressSlider=(SeekBar) view.findViewById(R.id.player_progress_slider);
-        songTotalTime=(TextView)view.findViewById(R.id.player_song_total_time);
-        songCurrentProgress=(TextView)view.findViewById(R.id.player_song_current_progress);
+        songTotalTime=(TfTextView) view.findViewById(R.id.player_song_total_time);
+        songCurrentProgress=(TfTextView) view.findViewById(R.id.player_song_current_progress);
 
 
         return view;

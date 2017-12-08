@@ -71,12 +71,12 @@
                 android:clipToPadding="false"
                 android:scrollbars="none" />
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="sans-serif-light"
+                app:ftype="medium"
                 android:text="@string/empty"
                 android:textColor="?android:textColorSecondary"
                 android:textSize="@dimen/sp20" />

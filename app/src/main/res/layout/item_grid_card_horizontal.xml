@@ -34,16 +34,18 @@
                 android:paddingRight="@dimen/dimen_8dp"
                 tools:ignore="UnusedAttribute">
 
-                <TextView
+                <com.ndroidlite.player.custom.TfTextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
+                    app:ftype="semibold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textSize="@dimen/sp14" />
 
-                <TextView
+                <com.ndroidlite.player.custom.TfTextView
                     android:id="@+id/text"
+                    app:ftype="medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"

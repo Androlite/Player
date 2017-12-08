@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.ndroidlite.player.activity.SearchActivity">
 
@@ -22,13 +23,13 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif-light"
             android:text="@string/no_results"
+            app:ftype="medium"
             android:textColor="?android:textColorSecondary"
             android:textSize="@dimen/sp20" />
 

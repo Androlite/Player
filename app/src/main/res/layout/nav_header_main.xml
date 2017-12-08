@@ -32,25 +32,25 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:fontFamily="sans-serif-medium"
+            app:ftype="bold"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/ate_primary_text_dark"
             android:textSize="14sp" />
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:fontFamily="sans-serif"
+            app:ftype="medium"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/ate_secondary_text_dark"

@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,12 +30,13 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:singleLine="true"
+                app:ftype="medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/ate_primary_text_light"
                 tools:text="Title" />
@@ -45,11 +47,12 @@
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.ndroidlite.player.custom.TfTextView
                     android:id="@+id/artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    app:ftype="medium"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/ate_secondary_text_light"
@@ -68,12 +71,13 @@
                     tools:ignore="HardcodedText"
                     tools:text="•" />
 
-                <TextView
+                <com.ndroidlite.player.custom.TfTextView
                     android:id="@+id/album"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:singleLine="true"
+                    app:ftype="medium"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/ate_secondary_text_light"
                     tools:text="Album" />

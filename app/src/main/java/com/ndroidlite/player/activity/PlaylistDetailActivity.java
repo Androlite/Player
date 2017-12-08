@@ -26,6 +26,7 @@ import com.ndroidlite.player.activity.base.AdlSlidingMusicPanelActivity;
 import com.ndroidlite.player.adapter.SongAdapter;
 import com.ndroidlite.player.adapter.song.CustomPlaylistSongAdapter;
 import com.ndroidlite.player.adapter.song.PlaylistSongAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.SleepTimerDialog;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.interfaces.CabHolder;
@@ -56,7 +57,7 @@ public class PlaylistDetailActivity extends AdlSlidingMusicPanelActivity impleme
     public static String EXTRA_PLAYLIST = "extra_playlist";
 
     private Toolbar toolbar;
-    private TextView empty;
+    private TfTextView empty;
     private RecyclerView recyclerView;
 
     private Playlist playlist;
@@ -75,7 +76,7 @@ public class PlaylistDetailActivity extends AdlSlidingMusicPanelActivity impleme
         //setContentView(R.layout.activity_playlist_detail);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        empty = (TextView) findViewById(R.id.empty);
+        empty = (TfTextView) findViewById(R.id.empty);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         setStatusbarColorAuto();

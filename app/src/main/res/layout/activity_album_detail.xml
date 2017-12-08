@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.ndroidlite.player.activity.AlbumDetailActivity">
 
     <ImageView
@@ -34,14 +35,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_view_height"
             android:height="@dimen/title_view_height"
             android:background="?attr/defaultFooterColor"
             android:elevation="@dimen/dimen_4dp"
-            android:fontFamily="sans-serif-medium"
+            app:ftype="bold"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dimen_72dp"
             android:paddingRight="@dimen/dimen_72dp"

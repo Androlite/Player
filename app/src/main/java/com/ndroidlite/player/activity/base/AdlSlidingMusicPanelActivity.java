@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.PathInterpolator;
+import android.widget.FrameLayout;
 
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.fragments.player.AdlPlayerFragment;
@@ -27,17 +28,10 @@ import com.ndroidlite.player.utils.PreferenceUtil;
 import com.ndroidlite.player.utils.ViewUtil;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Optional;
-
 
 public abstract class AdlSlidingMusicPanelActivity extends AdlMusicServiceActivity implements SlidingUpPanelLayout.PanelSlideListener, CardPlayerFragment.Callbacks {
     public static final String TAG = AdlSlidingMusicPanelActivity.class.getSimpleName();
-
-    @BindView(R.id.sliding_layout)
-    SlidingUpPanelLayout slidingUpPanelLayout;
-
+    private SlidingUpPanelLayout slidingUpPanelLayout;
     private int navigationbarColor;
     private int taskColor;
     private boolean lightStatusbar;
@@ -49,11 +43,13 @@ public abstract class AdlSlidingMusicPanelActivity extends AdlMusicServiceActivi
     private ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     private AdlPlayerFragment playerFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(createContentView());
-        ButterKnife.bind(this);
+
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
         currentNowPlayingScreen = PreferenceUtil.getInstance(this).getNowPlayingScreen();
         Fragment fragment; // must implement AbsPlayerFragment
@@ -204,7 +200,7 @@ public abstract class AdlSlidingMusicPanelActivity extends AdlMusicServiceActivi
     protected View wrapSlidingMusicPanel(@LayoutRes int resId) {
         @SuppressLint("InflateParams")
         View slidingMusicPanelLayout = getLayoutInflater().inflate(R.layout.activity_adl_sliding_music_panel, null);
-        ViewGroup contentContainer = ButterKnife.findById(slidingMusicPanelLayout, R.id.content_container);
+        ViewGroup contentContainer = (FrameLayout) slidingMusicPanelLayout.findViewById(R.id.content_container);
         getLayoutInflater().inflate(resId, contentContainer);
         return slidingMusicPanelLayout;
     }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/dimen_2dp"
     android:foreground="?rectSelectorStrong">
 
@@ -36,19 +37,22 @@
             android:paddingLeft="@dimen/dimen_16dp"
             android:paddingRight="@dimen/dimen_16dp">
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
                 android:singleLine="true"
+                app:ftype="semibold"
+                android:textSize="@dimen/sp14"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                app:ftype="medium"
+                android:textSize="@dimen/sp12"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         </LinearLayout>

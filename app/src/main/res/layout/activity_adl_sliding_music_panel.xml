@@ -32,7 +32,8 @@
             android:id="@+id/mini_player_fragment"
             class="com.ndroidlite.player.fragments.player.MiniPlayerFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_56dp" />
+            android:layout_height="@dimen/dimen_56dp"
+            tools:layout="@layout/fragment_mini_player" />
 
     </FrameLayout>
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_96dp"
@@ -67,24 +68,26 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:singleLine="true"
+                app:ftype="semibold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/ate_primary_text_dark"
                 tools:text="Title" />
 
-            <TextView
+            <com.ndroidlite.player.custom.TfTextView
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:singleLine="true"
+                app:ftype="medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textColor="@color/ate_secondary_text_dark"
                 tools:text="Text" />

@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.ThemeSingleton;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.service.MusicService;
 import com.ndroidlite.player.utils.MusicUtil;
 import com.ndroidlite.player.utils.PreferenceUtil;
@@ -33,7 +34,7 @@ public class SleepTimerDialog  extends DialogFragment {
     private MaterialDialog materialDialog;
     private TimerUpdater timerUpdater;
     private SeekArc seekArc;
-    private TextView timerDisplay;
+    private TfTextView timerDisplay;
 
     @Override
     public void onDismiss(DialogInterface dialog) {
@@ -97,7 +98,7 @@ public class SleepTimerDialog  extends DialogFragment {
         }
 
         seekArc=(SeekArc)getView().findViewById(R.id.seek_arc);
-        timerDisplay=(TextView)getView().findViewById(R.id.timer_display);
+        timerDisplay=(TfTextView)getView().findViewById(R.id.timer_display);
 
         seekArc.setProgressColor(ThemeSingleton.get().positiveColor.getDefaultColor());
         seekArc.setThumbColor(ThemeSingleton.get().positiveColor.getDefaultColor());

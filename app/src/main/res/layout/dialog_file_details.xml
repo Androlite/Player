@@ -2,53 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/file_path"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        app:ftype="medium"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="@dimen/sp16" />
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/file_name"
+        app:ftype="medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="@dimen/dimen_16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="@dimen/sp16" />
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/file_size"
+        app:ftype="medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="@dimen/dimen_16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="@dimen/sp16" />
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/file_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        app:ftype="medium"
         android:paddingTop="@dimen/dimen_16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="@dimen/sp16" />
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/track_length"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        app:ftype="medium"
         android:paddingTop="@dimen/dimen_16dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="@dimen/sp16" />
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/bitrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,12 +58,12 @@
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="@dimen/sp16" />
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/sampling_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
         android:paddingTop="@dimen/dimen_16dp"
+        app:ftype="medium"
         android:textAppearance="?android:textAppearanceMedium"
         android:textSize="@dimen/sp16" />
 

@@ -38,6 +38,7 @@ import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.base.AdlSlidingMusicPanelActivity;
 import com.ndroidlite.player.adapter.PlayingQueueAdapter;
 import com.ndroidlite.player.adapter.base.MediaEntryViewHolder;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.LyricsDialog;
 import com.ndroidlite.player.dialogs.SongShareDialog;
 import com.ndroidlite.player.fragments.player.AdlPlayerFragment;
@@ -62,7 +63,7 @@ public class FlatPlayerFragment extends AdlPlayerFragment implements PlayerAlbum
     private Toolbar toolbar;
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private RecyclerView recyclerView;
-    private TextView playerQueueSubHeader;
+    private TfTextView playerQueueSubHeader;
     private int lastColor;
 
     private FlatPlayerPlaybackControlsFragment playbackControlsFragment;
@@ -101,7 +102,7 @@ public class FlatPlayerFragment extends AdlPlayerFragment implements PlayerAlbum
         toolbar = (Toolbar) view.findViewById(R.id.player_toolbar);
         slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.player_sliding_layout);
         recyclerView = (RecyclerView) view.findViewById(R.id.player_recycler_view);
-        playerQueueSubHeader = (TextView) view.findViewById(R.id.player_queue_sub_header);
+        playerQueueSubHeader = (TfTextView) view.findViewById(R.id.player_queue_sub_header);
         return view;
     }
 

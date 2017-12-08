@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.adapter.AlbumCoverPagerAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.helper.MusicProgressViewUpdateHelper;
 import com.ndroidlite.player.misc.SimpleAnimatorListener;
@@ -50,9 +51,9 @@ public class PlayerAlbumCoverFragment extends AdlMusicServiceFragment implements
     @BindView(R.id.player_lyrics)
     FrameLayout lyricsLayout;
     @BindView(R.id.player_lyrics_line1)
-    TextView lyricsLine1;
+    TfTextView lyricsLine1;
     @BindView(R.id.player_lyrics_line2)
-    TextView lyricsLine2;
+    TfTextView lyricsLine2;
 
     private Callbacks callbacks;
     private int currentPosition;

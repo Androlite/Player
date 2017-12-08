@@ -17,11 +17,12 @@
         seekarc:SeekArc_startAngle="30"
         seekarc:SeekArc_sweepAngle="300" />
 
-    <TextView
+    <com.ndroidlite.player.custom.TfTextView
         android:id="@+id/timer_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        seekarc:ftype="semibold"
         android:textAppearance="?android:textAppearanceLarge" />
 
 </FrameLayout>

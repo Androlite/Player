@@ -40,6 +40,7 @@ import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.base.AdlSlidingMusicPanelActivity;
 import com.ndroidlite.player.adapter.PlayingQueueAdapter;
 import com.ndroidlite.player.adapter.base.MediaEntryViewHolder;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.LyricsDialog;
 import com.ndroidlite.player.dialogs.SongShareDialog;
 import com.ndroidlite.player.fragments.player.AdlPlayerFragment;
@@ -79,7 +80,7 @@ public class CardPlayerFragment extends AdlPlayerFragment
     @BindView(R.id.color_background)
     View colorBackground;
     @BindView(R.id.player_queue_sub_header)
-    TextView playerQueueSubHeader;
+    TfTextView playerQueueSubHeader;
 
     private int lastColor;
 

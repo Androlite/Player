@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/black">
 
     <ImageView
@@ -71,24 +72,26 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            app:ftype="bold"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/ate_primary_text_dark"
             tools:text="Title" />
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:singleLine="true"
+            app:ftype="medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/ate_secondary_text_dark"
             tools:text="Text" />

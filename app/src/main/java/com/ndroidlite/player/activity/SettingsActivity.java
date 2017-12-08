@@ -36,22 +36,17 @@ import com.ndroidlite.player.service.MusicService;
 import com.ndroidlite.player.utils.NavigationUtil;
 import com.ndroidlite.player.utils.PreferenceUtil;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SettingsActivity extends AdlBaseActivity implements ColorChooserDialog.ColorCallback {
     public static final String TAG = SettingsActivity.class.getSimpleName();
-    //private Toolbar toolbar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         setDrawUnderStatusbar(true);
-       // toolbar = (Toolbar) findViewById(R.id.toolbar);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setStatusbarColorAuto();
         setNavigationbarColorAuto();

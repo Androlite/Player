@@ -21,24 +21,26 @@
         android:visibility="gone"
         android:alpha="0">
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/player_lyrics_line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:textAlignment="center"
             android:textSize="@dimen/sp22"
+            app:ftype="medium"
             android:textColor="@color/md_white_1000"
             android:shadowColor="@color/md_black_1000"
             android:shadowRadius="4"
             android:visibility="gone" />
 
-        <TextView
+        <com.ndroidlite.player.custom.TfTextView
             android:id="@+id/player_lyrics_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:textAlignment="center"
+            app:ftype="medium"
             android:textSize="@dimen/sp22"
             android:textColor="@color/md_white_1000"
             android:shadowColor="@color/md_black_1000"

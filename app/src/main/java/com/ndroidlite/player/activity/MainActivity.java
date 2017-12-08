@@ -3,9 +3,11 @@ package com.ndroidlite.player.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,13 +15,16 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.ScrimInsetsFrameLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +35,9 @@ import com.kabouzeid.appthemehelper.util.ATHUtil;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.base.AdlSlidingMusicPanelActivity;
+import com.ndroidlite.player.custom.FontType;
+import com.ndroidlite.player.custom.Functions;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.dialogs.ChangelogDialog;
 import com.ndroidlite.player.fragments.FavouriteFragment;
 import com.ndroidlite.player.fragments.FilesFragment;
@@ -49,8 +57,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import static butterknife.ButterKnife.findById;
 
 
 public class MainActivity extends AdlSlidingMusicPanelActivity {
@@ -60,24 +67,31 @@ public class MainActivity extends AdlSlidingMusicPanelActivity {
     private static final int LIBRARY = 0;
     private static final int FILES = 1;
     private static final int FAV = 2;
+    /**
+     * The total number of menu items in the {@link NavigationView}
+     */
+    private static final int MENU_ITEMS = 5;
+    /**
+     * Contains the {@link MenuItem} views in the {@link NavigationView}
+     */
+    private final ArrayList<View> mMenuItems = new ArrayList<>(MENU_ITEMS);
 
-    @BindView(R.id.navigation_view)
-    NavigationView navigationView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
 
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     @Nullable
     MainActivityFragmentCallbacks currentFragment;
 
     @Nullable
     private View navigationDrawerHeader;
-
     private boolean blockRequestPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             Util.setStatusBarTranslucent(getWindow());
@@ -107,6 +121,7 @@ public class MainActivity extends AdlSlidingMusicPanelActivity {
         if (!checkShowIntro()) {
             checkShowChangelog();
         }
+
     }
 
     private void setMusicChooser(int key) {
@@ -156,7 +171,7 @@ public class MainActivity extends AdlSlidingMusicPanelActivity {
     protected View createContentView() {
         @SuppressLint("InflateParams")
         View contentView = getLayoutInflater().inflate(R.layout.activity_main, null);
-        ViewGroup drawerContent = ButterKnife.findById(contentView, R.id.drawer_content_container);
+        ViewGroup drawerContent = (ScrimInsetsFrameLayout) contentView.findViewById(R.id.drawer_content_container);
         drawerContent.addView(wrapSlidingMusicPanel(R.layout.activity_main_content));
         return contentView;
     }
@@ -165,6 +180,26 @@ public class MainActivity extends AdlSlidingMusicPanelActivity {
         int accentColor = ThemeStore.accentColor(this);
         NavigationViewUtil.setItemIconColors(navigationView, ATHUtil.resolveColor(this, R.attr.iconColor, ThemeStore.textColorSecondary(this)), accentColor);
         NavigationViewUtil.setItemTextColors(navigationView, ThemeStore.textColorPrimary(this), accentColor);
+
+        // Grab the NavigationView Menu
+        final Menu navMenu = navigationView.getMenu();
+        // Install an OnGlobalLayoutListener and wait for the NavigationMenu to fully initialize
+        navigationView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Remember to remove the installed OnGlobalLayoutListener
+                navigationView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                // Loop through and find each MenuItem View
+                for (int i = 0, length = navMenu.size(); i < length; i++) {
+                    final MenuItem item = navMenu.getItem(i);
+                    navigationView.findViewsWithText(mMenuItems, item.getTitle(), View.FIND_VIEWS_WITH_TEXT);
+                }
+                // Loop through each MenuItem View and apply your custom Typeface
+                for (final View menuItem : mMenuItems) {
+                    ((TextView) menuItem).setTypeface(Functions.getFontType(MainActivity.this, FontType.Bold.getId()), Typeface.BOLD);
+                }
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -217,8 +252,8 @@ public class MainActivity extends AdlSlidingMusicPanelActivity {
                     }
                 });
             }
-            ((TextView) navigationDrawerHeader.findViewById(R.id.title)).setText(song.title);
-            ((TextView) navigationDrawerHeader.findViewById(R.id.text)).setText(song.artistName);
+            ((TfTextView) navigationDrawerHeader.findViewById(R.id.title)).setText(song.title);
+            ((TfTextView) navigationDrawerHeader.findViewById(R.id.text)).setText(song.artistName);
             SongGlideRequest.Builder.from(Glide.with(this), song)
                     .checkIgnoreMediaStore(this).build()
                     .into(((ImageView) navigationDrawerHeader.findViewById(R.id.image)));
@@ -255,6 +290,7 @@ public class MainActivity extends AdlSlidingMusicPanelActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public boolean handleBackPress() {
@@ -372,6 +408,7 @@ public class MainActivity extends AdlSlidingMusicPanelActivity {
     public interface MainActivityFragmentCallbacks {
         boolean handleBackPress();
     }
+
 
 
    /* @Override

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.model.Song;
 import com.ndroidlite.player.utils.MusicUtil;
 
@@ -67,13 +68,13 @@ public class SongDetailDialog extends DialogFragment {
                 .build();
 
         View dialogView = dialog.getCustomView();
-        final TextView fileName = (TextView) dialogView.findViewById(R.id.file_name);
-        final TextView filePath = (TextView) dialogView.findViewById(R.id.file_path);
-        final TextView fileSize = (TextView) dialogView.findViewById(R.id.file_size);
-        final TextView fileFormat = (TextView) dialogView.findViewById(R.id.file_format);
-        final TextView trackLength = (TextView) dialogView.findViewById(R.id.track_length);
-        final TextView bitRate = (TextView) dialogView.findViewById(R.id.bitrate);
-        final TextView samplingRate = (TextView) dialogView.findViewById(R.id.sampling_rate);
+        final TfTextView fileName = (TfTextView) dialogView.findViewById(R.id.file_name);
+        final TfTextView filePath = (TfTextView) dialogView.findViewById(R.id.file_path);
+        final TfTextView fileSize = (TfTextView) dialogView.findViewById(R.id.file_size);
+        final TfTextView fileFormat = (TfTextView) dialogView.findViewById(R.id.file_format);
+        final TfTextView trackLength = (TfTextView) dialogView.findViewById(R.id.track_length);
+        final TfTextView bitRate = (TfTextView) dialogView.findViewById(R.id.bitrate);
+        final TfTextView samplingRate = (TfTextView) dialogView.findViewById(R.id.sampling_rate);
 
         fileName.setText(makeTextWithTitle(context, R.string.label_file_name, "-"));
         filePath.setText(makeTextWithTitle(context, R.string.label_file_path, "-"));

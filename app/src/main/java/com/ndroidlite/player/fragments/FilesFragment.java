@@ -41,6 +41,7 @@ import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.MainActivity;
 import com.ndroidlite.player.adapter.SongAdapter;
 import com.ndroidlite.player.adapter.SongFileAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.helper.MusicPlayerRemote;
 import com.ndroidlite.player.helper.menu.SongMenuHelper;
 import com.ndroidlite.player.helper.menu.SongsMenuHelper;
@@ -82,7 +83,7 @@ public class FilesFragment extends AdlMainActivityFragment implements MainActivi
     protected static final String CRUMBS = "crumbs";
     private CoordinatorLayout coordinatorLayout;
     private View contain;
-    private TextView empty;
+    private TfTextView empty;
     private Toolbar toolbar;
     private BreadCrumbLayout breadCrumbs;
     private AppBarLayout appbar;
@@ -152,7 +153,7 @@ public class FilesFragment extends AdlMainActivityFragment implements MainActivi
 
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
         contain = view.findViewById(R.id.container);
-        empty = (TextView) view.findViewById(R.id.empty);
+        empty = (TfTextView) view.findViewById(R.id.empty);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         breadCrumbs = (BreadCrumbLayout) view.findViewById(R.id.bread_crumbs);
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);

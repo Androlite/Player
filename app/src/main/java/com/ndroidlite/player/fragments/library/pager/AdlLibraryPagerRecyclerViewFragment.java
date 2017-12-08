@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.ndroidlite.player.R;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.utils.ViewUtil;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -36,7 +37,7 @@ public abstract class AdlLibraryPagerRecyclerViewFragment <A extends RecyclerVie
     RecyclerView recyclerView;
     @Nullable
     @BindView(android.R.id.empty)
-    TextView empty;
+    TfTextView empty;
 
     private A adapter;
     private LM layoutManager;

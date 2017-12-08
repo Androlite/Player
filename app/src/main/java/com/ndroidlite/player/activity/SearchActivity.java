@@ -22,6 +22,7 @@ import com.kabouzeid.appthemehelper.ThemeStore;
 import com.ndroidlite.player.R;
 import com.ndroidlite.player.activity.base.AdlMusicServiceActivity;
 import com.ndroidlite.player.adapter.SearchAdapter;
+import com.ndroidlite.player.custom.TfTextView;
 import com.ndroidlite.player.interfaces.LoaderIds;
 import com.ndroidlite.player.loader.AlbumLoader;
 import com.ndroidlite.player.loader.ArtistLoader;
@@ -43,7 +44,7 @@ public class SearchActivity extends AdlMusicServiceActivity implements SearchVie
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private TextView empty;
+    private TfTextView empty;
     SearchView searchView;
 
     private SearchAdapter adapter;
@@ -57,7 +58,7 @@ public class SearchActivity extends AdlMusicServiceActivity implements SearchVie
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        empty = (TextView) findViewById(R.id.empty);
+        empty = (TfTextView) findViewById(R.id.empty);
 
         setStatusbarColorAuto();
         setNavigationbarColorAuto();

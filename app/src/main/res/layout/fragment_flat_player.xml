@@ -51,7 +51,8 @@
                         android:id="@+id/player_album_cover_fragment"
                         class="com.ndroidlite.player.fragments.player.PlayerAlbumCoverFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:layout="@layout/fragment_player_album_cover" />
 
                 </com.ndroidlite.player.views.WidthFitSquareLayout>
 
@@ -76,7 +77,8 @@
                 android:id="@+id/playback_controls_fragment"
                 class="com.ndroidlite.player.fragments.player.flat.FlatPlayerPlaybackControlsFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_falt_player_playback_controls" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -107,7 +109,7 @@
                         android:id="@+id/current_song"
                         layout="@layout/item_list" />
 
-                    <TextView
+                    <com.ndroidlite.player.custom.TfTextView
                         android:id="@+id/player_queue_sub_header"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
@@ -115,6 +117,7 @@
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:text="@string/up_next"
+                        sothree:ftype="medium"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textColor="?android:textColorSecondary" />
 
